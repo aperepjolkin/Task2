@@ -1,0 +1,17 @@
+<h1>Rates Receive Data</h1>
+<div class="container text-center" style="margin-top:100px;">
+    <button type="button" class="btn btn-warning" (click)="getRatesData()">Get Data</button>
+  </div>
+<app-progressbar></app-progressbar>
+<table style="width:70%">
+    <tr>
+      <th>Currency</th>
+      <th>Rate</th>
+    </tr>
+    <tr align="center"  *ngFor="let rate of ratesJSON | keyvalue">
+      <td> {{rate.key}} </td>
+      <td> {{rate.value}} </td>
+    </tr>
+  </table> 
+
+<p>{{errorMsg}}</p>
