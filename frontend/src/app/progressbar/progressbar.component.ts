@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, HostListener, EventEmitter } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { ProgressBarService } from './progressbar.service'
 
 @Component({
@@ -7,15 +7,17 @@ import { ProgressBarService } from './progressbar.service'
   styleUrls: ['./progressbar.component.css']
 })
 export class ProgressbarComponent implements OnInit {
+
   showSpinner = false;
-  constructor( private progressBarService: ProgressBarService) { }
+ 
+
+  constructor() { }
   ngOnInit() {
   }
 
-  @HostListener('click')
-  start() {
-    this.progressBarService.change.subscribe(showSpinner => {
-      this.showSpinner = true;
-    });
+  onGetEvent() {
+    console.log('test2');
+      this.showSpinner = false;
+   
   }
 }

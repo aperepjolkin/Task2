@@ -1,32 +1,33 @@
-import { Component, Input,HostListener } from '@angular/core'
+import { Component, Output, EventEmitter } from '@angular/core'
 import { WebService} from './web.service'
-import { ProgressBarService } from './progressbar/progressbar.service'
 
 @Component({
      selector:'messages',
      templateUrl: './messages.component.html'
 })
 export class MessagesComponent {
-
+ @Output() onGetEvent = new EventEmitter();
 
   title = 'frontend';
   ratesJSON: string;
   errorMsg: string;
  
-  constructor(private webService : WebService,private progressBarService: ProgressBarService ) {}
-  @HostListener('click')
-  run() {
-    this.progressBarService.showSpinner = true;
-  }
+  constructor(private webService : WebService ) {}
+  
+
   getRatesData() {
-    
+    this.onGetEvent.emit(true);
     this.webService.getMessages().then((data:any)=>{
 
     //console.log("Promise resolved with: " + JSON.stringify(data));
     this.ratesJSON = JSON.parse(JSON.stringify(data.rates));
 
     
-  }).catch((error)=>{
+  }).then(
+    ()=> {
+      this.onGetEvent.emit(false);
+    }
+  ).catch((error)=>{
     this.errorMsg = "data loading failed";
     console.log("Promise rejected with " + JSON.stringify(error));
   });
